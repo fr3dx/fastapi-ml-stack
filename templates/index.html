@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linear Regression Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Linear Regression Prediction</h1>
+
+        <!-- Form -->
+        <form id="predictForm">
+            <div class="input-group">
+                <label for="x1">x₁:</label>
+                <input type="text" id="x1" name="x1" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="x2">x₂:</label>
+                <input type="text" id="x2" name="x2" required>
+            </div>
+
+            <button type="submit" class="btn">Predict</button>
+        </form>
+
+        <!-- Display results -->
+        <div id="result" class="result"></div>
+
+        <!-- Model equations -->
+        <div class="model-equations">
+            <h2>Model Equations:</h2>
+            <p>The model is based on the following 3 equations:</p>
+            <div class="equation">
+                <p>y₁ = 3x₁ + 2x₂</p>
+            </div>
+            <div class="equation">
+                <p>y₂ = x₁ - x₂</p>
+            </div>
+            <div class="equation">
+                <p>y₃ = -x₁ + 4x₂</p>
+            </div>
+        </div>
+
+    <script>
+        // Handle form submission and result display
+        const form = document.getElementById('predictForm');
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            // Get the values from the form
+            const x1 = document.getElementById('x1').value;
+            const x2 = document.getElementById('x2').value;
+
+            // Create the data object
+            const formData = {
+                features: [parseFloat(x1), parseFloat(x2)]
+            };
+
+            // Send the POST request with JSON body
+            fetch('/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'  // Set the Content-Type header to application/json
+                },
+                body: JSON.stringify(formData)  // Convert the data object to JSON
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    document.getElementById('result').textContent = `Error: ${data.error}`;
+                } else {
+                    const resultDiv = document.getElementById('result');
+                    resultDiv.innerHTML = `
+                        <h3>Prediction Results</h3>
+                        <div class="prediction">
+                            <p><strong>y1:</strong> ${data.y1}</p>
+                            <p><strong>y2:</strong> ${data.y2}</p>
+                            <p><strong>y3:</strong> ${data.y3}</p>
+                        </div>
+                    `;
+                }
+            })
+            .catch(error => {
+                document.getElementById('result').textContent = `Error: ${error}`;
+            });
+        });
+    </script>
+</body>
+</html>

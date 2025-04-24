@@ -1,0 +1,7 @@
+# .dockerignore
+run_stack.ps1
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+*.git
