@@ -2,7 +2,7 @@
 
 # 1. Step: Run model training script
 Write-Host "Running model training script..."
-python .\model.py
+python .\app\model.py
 
 # Check if model training was successful
 if ($LASTEXITCODE -ne 0) {

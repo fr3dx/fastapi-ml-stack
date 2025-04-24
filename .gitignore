@@ -55,4 +55,4 @@ Thumbs.db
 ehthumbs.db
 
 # Ignore the regression model file
-regression_model.pkl
+app/regression_model.pkl

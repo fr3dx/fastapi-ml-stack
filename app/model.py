@@ -31,7 +31,7 @@ model = LinearRegression()
 model.fit(X, Y)
 
 # Save the trained model to a file
-joblib.dump(model, 'regression_model.pkl')
+joblib.dump(model, 'app/regression_model.pkl')
 
 # Test the model by making predictions with the same input
 predictions = model.predict(X)
@@ -41,7 +41,7 @@ print("Predictions:\n", predictions)
 print("Actual values:\n", Y)
 
 # Optional: If you want to load and test the saved model
-loaded_model = joblib.load('regression_model.pkl')
+loaded_model = joblib.load('app/regression_model.pkl')
 
 # Test the model with a new input
 new_input = np.array([[2.0, 3.0]])  # Example test input
