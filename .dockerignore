@@ -1,5 +1,7 @@
 # .dockerignore
-run_stack.ps1
+build_and_run_stack.ps1
+build_stack.ps1
+remove_all_container_images.ps1
 __pycache__
 *.pyc
 *.pyo

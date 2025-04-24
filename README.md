@@ -33,10 +33,13 @@ Make sure to install the required Python packages before running the project:
 
 
 ### Build stack
-run_stack.ps1
+build_stack.ps1
 
-### Run the application
-docker run -d -p 8000:8000 fastapi-regression:latest
+### Build AND run stack
+build_and_run_stack.ps1
+
+### You may want to make a POST request using the following PowerShell command 
+Invoke-RestMethod -Method POST -Uri http://127.0.0.1:8000/predict -Body (@{features = @(1.0, 1.0)} | ConvertTo-Json -Depth 2) -ContentType "application/json"
 
 ```
 
