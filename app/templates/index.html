@@ -62,9 +62,9 @@
             fetch('/predict', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'  // Set the Content-Type header to application/json
+                    'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(formData)  // Convert the data object to JSON
+                body: JSON.stringify(formData)
             })
             .then(response => response.json())
             .then(data => {
@@ -75,9 +75,9 @@
                     resultDiv.innerHTML = `
                         <h3>Prediction Results</h3>
                         <div class="prediction">
-                            <p><strong>y1:</strong> ${data.y1}</p>
-                            <p><strong>y2:</strong> ${data.y2}</p>
-                            <p><strong>y3:</strong> ${data.y3}</p>
+                            <p><strong>y₁:</strong> ${data.predictions.y1}</p>
+                            <p><strong>y₂:</strong> ${data.predictions.y2}</p>
+                            <p><strong>y₃:</strong> ${data.predictions.y3}</p>
                         </div>
                     `;
                 }

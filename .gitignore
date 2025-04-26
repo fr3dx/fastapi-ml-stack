@@ -56,3 +56,4 @@ ehthumbs.db
 
 # Ignore the regression model file
 app/regression_model.pkl
+app/.env
