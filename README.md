@@ -44,6 +44,6 @@ Use PowerShell scripts for stack management:
 
 Send a POST request with two input features:
 
-```powershell
-Invoke-RestMethod -Method POST -Uri http://127.0.0.1:8000/predict -Body '{"features": [1.0, 1.0]}' -ContentType "application/json"
+```Curl
+curl -X POST -d "x1=1.0&x2=1.0" http://127.0.0.1:8000/predict
 

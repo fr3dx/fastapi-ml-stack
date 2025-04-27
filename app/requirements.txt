@@ -12,3 +12,7 @@ scikit-learn==1.4.0  # Machine learning library (includes joblib)
 # Configuration and validation
 python-dotenv==1.0.0  # .env file support
 pydantic-settings>=2.1.0,<3.0.0  # Data validation and settings management
+
+# FastAPI form data handling
+python-multipart==0.0.20
+
