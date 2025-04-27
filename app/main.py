@@ -86,60 +86,63 @@ async def home(request: Request):
 
 # Prediction endpoint that handles form submissions
 @app.post("/predict")
-async def predict(request: Request, x1: float = Form(...), x2: float = Form(...)):
+async def predict(request: Request, x1: str = Form(...), x2: str = Form(...)):
     """
     Handle prediction requests from the frontend.
     
     Args:
-        request (Request): FastAPI request object
-        x1 (float): First feature value from form
-        x2 (float): Second feature value from form
+        request (Request): The FastAPI request object that contains data sent from the frontend.
+        x1 (str): The first feature value provided in the form, received as a string.
+        x2 (str): The second feature value provided in the form, received as a string.
         
     Returns:
-        TemplateResponse: Either prediction results or error page
+        TemplateResponse: Returns either the prediction results or an error page with a proper message.
         
     Notes:
-        - Processes input data through the loaded ML model
-        - Handles various error scenarios gracefully
-        - Returns HTML responses for HTMX compatibility
+        - The function processes input data and uses the pre-trained machine learning model to make predictions.
+        - Error handling is implemented to catch issues like invalid input or problems with the model.
+        - The function is designed to return HTML responses, compatible with HTMX for dynamic page updates.
     """
-    print(f"Input data: x1 = {x1}, x2 = {x2}")  # Log input values
     try:
-        # Prepare input data as numpy array for model prediction
-        input_data = np.array([[x1, x2]])
-        print(f"Input data as NumPy array: {input_data}")  # Log transformed input
+        # Attempt to convert the string inputs (x1 and x2) to floating-point numbers.
+        x1_float = float(x1)
+        x2_float = float(x2)
+               
+        # Prepare the input data in the format required by the model, which is a 2D NumPy array.
+        input_data = np.array([[x1_float, x2_float]])
+        print(f"Input data as NumPy array: {input_data}")  # Log the input data in array format for debugging.
         
         try:
-            # Make prediction and round results to 6 decimal places
+            # Make a prediction using the loaded model, and round the results to 6 decimal places.
             prediction = model.predict(input_data)
-            print(f"Model prediction: {prediction}")  # Log raw prediction
-            prediction = np.round(prediction, 6)
+            prediction = np.round(prediction, 6)  # Round predictions to 6 decimal places.
         except Exception as model_error:
-            print(f"Model prediction error: {model_error}")  # Log model error
-            raise RuntimeError(f"Model prediction failed: {str(model_error)}")
+            # Handle any errors occurring during the model prediction.
+            print(f"Model prediction error: {model_error}") 
+            raise RuntimeError(f"Model prediction failed: {str(model_error)}") 
 
-        # Return structured response as HTML for HTMX
+        # Return the prediction results by rendering the 'result.html' template with the prediction data.
         return templates.TemplateResponse(
-            "result.html",
+            "result.html",  # The template to render.
             {
-                "request": request,
-                "prediction": {
-                    "y1": prediction[0][0],
-                    "y2": prediction[0][1],
-                    "y3": prediction[0][2],
+                "request": request,  
+                "prediction": {  # Pass the prediction results to the template.
+                    "y1": prediction[0][0],  
+                    "y2": prediction[0][1],  
+                    "y3": prediction[0][2],  
                 },
-                "inputs": {"x1": x1, "x2": x2},
+                "inputs": {"x1": x1_float, "x2": x2_float},  # Pass the inputs (x1 and x2) to the template.
             },
         )
 
     except ValueError as e:
-        print(f"ValueError: {e}")  # Log value errors
-        return templates.TemplateResponse("error.html", {"request": request, "error": str(e)})
-
-    except RuntimeError as e:
-        print(f"RuntimeError: {e}")  # Log runtime errors
-        return templates.TemplateResponse("error.html", {"request": request, "error": str(e)})
+        # This block catches errors if the conversion of inputs to float fails (e.g., if input is non-numeric).
+        print(f"ValueError: {e}") 
+        # Return an error page with a message indicating the input is invalid.
+        return templates.TemplateResponse("error.html", {"request": request, "error": "Invalid input, please provide valid numbers."})
 
     except Exception as e:
-        print(f"Unexpected error: {e}")  # Log unexpected errors
+        # This block handles any other unexpected errors that may occur in the process.
+        print(f"Unexpected error: {e}") 
+        # Return a generic error page indicating an internal server error.
         return templates.TemplateResponse("error.html", {"request": request, "error": "Internal server error"})
