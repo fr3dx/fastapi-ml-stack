@@ -3,43 +3,38 @@
 # ======================
 FROM python:3.11-slim as builder
 
-# Environment Configuration
+# Set environment variables to customize Python and Debian behavior
 ENV PATH=/root/.local/bin:$PATH \
     DEBIAN_FRONTEND=noninteractive \
     PYTHONUNBUFFERED=1
 
-# Application Setup
+# Set the working directory inside the container to /app
 WORKDIR /app
 
-# Dependency Installation
+# Copy the requirements file into the container
 COPY app/requirements.txt ./
-RUN pip install \
-    --default-timeout=100 \
-    --no-cache-dir \
-    --user \
-    -r requirements.txt
+
+# Install dependencies in the container without caching to reduce image size
+RUN pip install --no-cache-dir \
+    --prefix=/install -r requirements.txt
 
 # ======================
 # Stage 2: Runtime Stage
 # ======================
 FROM python:3.11-slim
 
-# Environment Configuration
+# Set environment variables for the runtime container
 ENV PATH=/root/.local/bin:$PATH \
     PYTHONUNBUFFERED=1
 
-# Application Setup
+# Set the working directory inside the container to /app
 WORKDIR /app
 
-# Copy Dependencies from Builder
-COPY --from=builder /root/.local /root/.local
+# Copy the installed dependencies from the builder stage to the runtime environment
+COPY --from=builder /install /usr/local
 
-# Copy Application Code
-COPY app/ ./
-
-# Health Check (Recommended Addition)
-HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
-    CMD curl -f http://localhost:8000/health || exit 1
+# Copy the application code (the app directory) into the container
+COPY ./app /app/app  
 
 # Application Execution
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
