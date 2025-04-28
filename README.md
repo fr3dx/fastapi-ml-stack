@@ -2,48 +2,85 @@
 
 This project is a **FastAPI**-based web application powered by a **multi-output linear regression model**, trained using `scikit-learn`. It includes a simple **HTMX** frontend for user interaction and is fully containerized using **Podman** or **Docker**.
 
-## Tech stack
+## Tech Stack
 
-- **Python 3.11**
-- **FastAPI**
-- **HTMX**
-- **scikit-learn**
-- **Pydantic**
-- **Podman** or **Docker**
-
+- **Python 3.12**
+- **FastAPI** (API framework)
+- **HTMX** (frontend interactivity)
+- **scikit-learn** (machine learning)
+- **Pydantic** (data validation)
+- **CORSMiddleware** (CORS handling)
+- **Podman/Docker** (containerization)
 
 ## Features
 
-- **Regression Model**: Predicts 3 outputs (y₁, y₂, y₃) from 2 inputs (x₁, x₂):
-  - y₁ = 3x₁ + 2x₂  
-  - y₂ = x₁ − x₂  
-  - y₃ = −x₁ + 4x₂  
-- **API Endpoint**: `/predict` — accepts a JSON body with `features: [x1, x2]`, returns predicted `y1`, `y2`, and `y3`
-- **Frontend**: HTMX-powered form with real-time result display
-- **Containerized Stack**: Model training and API are containerized and reproducible
+- **Regression Model**: Predicts 3 outputs (`y₁`, `y₂`, `y₃`) from 2 inputs (`x₁`, `x₂`):
+
+```
+y₁ = 3 * x₁ + 2 * x₂
+y₂ = x₁ - x₂
+y₃ = -x₁ + 4 * x₂
+```
+
+- **API Endpoints**:
+- `/predict` (POST): Accepts URL-encoded form data `application/x-www-form-urlencoded` → returns predicted `y1`, `y2`, `y3`
+- `/` (GET): Serves HTMX frontend
+- `/health` (GET): Healthcheck
+
+- **Frontend**: HTMX-powered form with real-time results
+- **Containerized**: Complete stack in containers for reproducibility
 
 ## Backend Overview
 
-- `/predict`: POST endpoint for prediction
-- `/`: Serves the HTMX frontend
-- `regression_model.pkl`: Trained and saved multi-output regression model
-- `Features` and `Predictions`: Defined using Pydantic for type safety and validation
-- `.env` support with `pydantic.BaseSettings` (for future config separation)
+- **Model**: `regression_model.pkl` (pre-trained multi-output regression)
+- **Pydantic Models**:
+- `Features`: Validates input data
+- `Predictions`: Structures output
+- **Configuration**: `.env` support via `pydantic.BaseSettings`
 
 ## Setup
 
-Use PowerShell scripts for stack management:
+### Prerequisites
 
-| Task | Script |
-|------|--------|
-| Build containers only | `build_stack.ps1` |
-| Build and run full stack | `build_and_run_stack.ps1` |
-| Remove all containers and images | `remove_all_container_images.ps1` |
+- Python 3.12
+- Podman/Docker
+- PowerShell (for scripts)
 
-## API Usage Example
+### PowerShell Scripts
 
-Send a POST request with two input features:
+| Task                               | Script                           |
+|------------------------------------|----------------------------------|
+| Build containers                   | `build_stack.ps1`                |
+| Build + run full stack             | `build_and_run_stack.ps1`        |
+| Clean up containers/images         | `remove_all_container_images.ps1`|
 
-```Curl
-curl -X POST -d "x1=1.0&x2=1.0" http://127.0.0.1:8000/predict
+## API Usage
+
+### cURL Examples
+
+```
+curl -X POST -d "x1=1&x2=2" http://127.0.0.1:8000/predict
+
+<div class="result">
+    <h3>Prediction Results</h3>
+    <div class="prediction">
+      <p><strong>y₁:</strong> 7.0</p>
+      <p><strong>y₂:</strong> -1.0</p>
+      <p><strong>y₃:</strong> 7.0</p>
+    </div>
+    <div class="inputs">
+      <p><strong>x₁:</strong> 1.0</p>
+      <p><strong>x₂:</strong> 2.0</p>
+    </div>
+  </div>
+```
+```
+curl -X GET http://127.0.0.1:8000/health
+
+{"status":"ok"}
+```
+
+
+## The frontend
+![Frontend](/images/fe.png)
 

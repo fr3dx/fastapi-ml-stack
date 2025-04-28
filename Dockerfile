@@ -1,7 +1,7 @@
 # ======================
 # Stage 1: Builder Stage
 # ======================
-FROM python:3.11-slim as builder
+FROM python:3.12.10-slim-bullseye as builder
 
 # Set environment variables to customize Python and Debian behavior
 ENV PATH=/root/.local/bin:$PATH \
@@ -21,7 +21,10 @@ RUN pip install --no-cache-dir \
 # ======================
 # Stage 2: Runtime Stage
 # ======================
-FROM python:3.11-slim
+FROM python:3.12.10-slim-bullseye
+
+# Healthcheck
+HEALTHCHECK CMD python /app/app/healthcheck.py
 
 # Set environment variables for the runtime container
 ENV PATH=/root/.local/bin:$PATH \
@@ -33,7 +36,7 @@ WORKDIR /app
 # Copy the installed dependencies from the builder stage to the runtime environment
 COPY --from=builder /install /usr/local
 
-# Copy the application code (the app directory) into the container
+# Copy the application code into the container
 COPY ./app /app/app  
 
 # Application Execution

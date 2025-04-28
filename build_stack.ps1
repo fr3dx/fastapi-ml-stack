@@ -1,9 +1,12 @@
-# Define the image and container name in a variable NOT READY
+### BUILD THE STACK
+
+# Define variables
 $imageName = "localhost/fastapi-regression"
 $containerName = "fastapi-regression"
-$fullImageName = "$imageName:latest"
+$fullContainerName = "$containerName"+":latest"
+$fullImageName = "$imageName"+":latest"
 
-# Step: Run model training script
+# Run model training script
 Write-Host "Running model training script..."
 python .\app\model.py
 
@@ -15,9 +18,9 @@ if ($LASTEXITCODE -ne 0) {
 
 Write-Host "Model training completed successfully."
 
-# Step: Build the Podman image after model training
+# Build the Podman image after model training
 Write-Host "Building Podman image..."
-podman build -t fastapi-regression:latest .
+podman build -t $fullContainerName .
 
 # Check if Podman build was successful
 if ($LASTEXITCODE -ne 0) {
