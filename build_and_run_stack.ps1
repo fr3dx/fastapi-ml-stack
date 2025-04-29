@@ -20,7 +20,7 @@ Write-Host "Model training completed successfully."
 
 # Build the Podman image after model training
 Write-Host "Building Podman image..."
-podman build -t $fullContainerName .
+podman build --format docker -t $fullContainerName .
 
 # Check if Podman build was successful
 if ($LASTEXITCODE -ne 0) {

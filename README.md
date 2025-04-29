@@ -60,7 +60,8 @@ y₃ = -x₁ + 4 * x₂
 
 ```
 curl -X POST -d "x1=1&x2=2" http://127.0.0.1:8000/predict
-
+```
+```
 <div class="result">
     <h3>Prediction Results</h3>
     <div class="prediction">
@@ -76,7 +77,8 @@ curl -X POST -d "x1=1&x2=2" http://127.0.0.1:8000/predict
 ```
 ```
 curl -X GET http://127.0.0.1:8000/health
-
+```
+```
 {"status":"ok"}
 ```
 

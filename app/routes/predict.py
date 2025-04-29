@@ -5,44 +5,12 @@ from app.config import settings
 import numpy as np
 
 router = APIRouter()
+
 templates = Jinja2Templates(directory="app/templates")
 
 # Load the pre-trained model
 model = load_model(settings.model_path)
 
-# Route to serve the homepage with the 'index.html' template
-@router.get("/")
-async def home(request: Request):
-    """
-    Renders the homepage using the 'index.html' template.
-    
-    Args:
-        request (Request): The FastAPI request object.
-        
-    Returns:
-        TemplateResponse: The rendered HTML template for the homepage.
-    """
-    return templates.TemplateResponse("index.html", {"request": request})
-
-# Endpoint for health check
-@router.get("/health")
-async def health_check():
-    """
-    A simple health check endpoint to confirm that the API is up and running.
-    
-    Returns:
-        JSON response: {"status": "ok"} if the service is healthy.
-    """
-    try:
-        # You can perform any necessary health checks here, e.g., database connection, etc.
-        # For now, just return a simple 'ok' status
-        return {"status": "ok"}  # This is a simple health check response
-
-    except Exception as e:
-        # In case of an error, return an error message with a non-200 status code
-        return {"status": "error", "message": str(e)}
-
-# Endpoint for prediction requests, triggered by form submissions
 @router.post("/predict")
 async def predict(request: Request, x1: str = Form(...), x2: str = Form(...)):
     """

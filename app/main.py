@@ -1,11 +1,15 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from app.config import settings
-from app.routes import router
 from fastapi.middleware.cors import CORSMiddleware
+from app.routes import routes
+
 
 # Initialize FastAPI application
 app = FastAPI()
+
+for router in routes:
+    app.include_router(router)
 
 # CORS configuration for security
 # The origins list is split from the allowed_origins string in the settings and stripped of any extra whitespace.
