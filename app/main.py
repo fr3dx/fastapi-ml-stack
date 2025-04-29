@@ -3,17 +3,17 @@ from fastapi.staticfiles import StaticFiles
 from app.config import settings
 from fastapi.middleware.cors import CORSMiddleware
 from app.routes import routes
-
+from typing import List
 
 # Initialize FastAPI application
-app = FastAPI()
+app: FastAPI = FastAPI()
 
 for router in routes:
     app.include_router(router)
 
 # CORS configuration for security
 # The origins list is split from the allowed_origins string in the settings and stripped of any extra whitespace.
-origins = [origin.strip() for origin in settings.allowed_origins.split(",")]
+origins: List[str] = [origin.strip() for origin in settings.allowed_origins.split(",")]
 
 # Add the CORSMiddleware to handle cross-origin resource sharing (CORS)
 app.add_middleware(

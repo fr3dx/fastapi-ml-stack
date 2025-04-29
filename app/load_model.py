@@ -1,9 +1,9 @@
 import joblib
 import numpy as np
-from typing import List
+from typing import List, Any
 
 # Function to load a machine learning model with error handling
-def load_model(model_path: str):
+def load_model(model_path: str) -> Any:
     """
     Load a trained model from the specified file path.
 
@@ -25,7 +25,7 @@ def load_model(model_path: str):
         raise RuntimeError(f"Failed to load model from {model_path}: {str(e)}")
 
 # Function to make predictions using the loaded model
-def predict(model, input_data: List[float]) -> np.ndarray:
+def predict(model: Any, input_data: List[float]) -> np.ndarray:
     """
     Make a prediction using the provided model and input data.
 
@@ -42,4 +42,3 @@ def predict(model, input_data: List[float]) -> np.ndarray:
     # Get the model’s prediction and round the results to 6 decimal places
     prediction = model.predict(input_array)
     return np.round(prediction, 6)
-

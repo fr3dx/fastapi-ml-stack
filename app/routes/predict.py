@@ -3,6 +3,7 @@ from fastapi.templating import Jinja2Templates
 from app.load_model import load_model, predict
 from app.config import settings
 import numpy as np
+from typing import Dict, Union
 
 router = APIRouter()
 
@@ -12,7 +13,11 @@ templates = Jinja2Templates(directory="app/templates")
 model = load_model(settings.model_path)
 
 @router.post("/predict")
-async def predict(request: Request, x1: str = Form(...), x2: str = Form(...)):
+async def predict(
+    request: Request,
+    x1: str = Form(...),
+    x2: str = Form(...)
+) -> Jinja2Templates.TemplateResponse:
     """
     Handles prediction requests from the frontend, processes input data,
     and returns the prediction results.
@@ -24,24 +29,19 @@ async def predict(request: Request, x1: str = Form(...), x2: str = Form(...)):
         
     Returns:
         TemplateResponse: The prediction results or an error page, depending on the outcome.
-        
-    Notes:
-        - The function processes the input data and uses the pre-trained model to make predictions.
-        - Error handling is implemented to catch invalid inputs or issues during prediction.
-        - The function is designed to return HTML responses, suitable for dynamic updates with HTMX.
     """
     try:
         # Attempt to convert the input values (x1 and x2) to floating-point numbers.
-        x1_float = float(x1)
-        x2_float = float(x2)
+        x1_float: float = float(x1)
+        x2_float: float = float(x2)
                
         # Prepare the input data in a 2D NumPy array format, as expected by the model.
-        input_data = np.array([[x1_float, x2_float]])
+        input_data: np.ndarray = np.array([[x1_float, x2_float]])
         print(f"Input data as NumPy array: {input_data}")  # Debug log for input data.
         
         try:
             # Make the prediction using the loaded model and round the results to 6 decimal places.
-            prediction = model.predict(input_data)
+            prediction: np.ndarray = model.predict(input_data)
             prediction = np.round(prediction, 6)  # Round predictions to 6 decimal places.
         except Exception as model_error:
             # Handle any errors encountered during model prediction.

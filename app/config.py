@@ -1,4 +1,5 @@
 from pydantic_settings import BaseSettings
+from typing import List
 
 class Settings(BaseSettings):
     """
@@ -23,5 +24,4 @@ class Settings(BaseSettings):
         env_file_encoding = 'utf-8'
 
 # Instantiate the Settings class to load configuration values
-settings = Settings()
-
+settings: Settings = Settings()
