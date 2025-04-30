@@ -24,7 +24,7 @@ RUN pip install --no-cache-dir \
 FROM python:3.12.10-slim-bullseye
 
 # Healthcheck
-HEALTHCHECK CMD python /app/app/healthcheck.py
+HEALTHCHECK CMD python /app/healthcheck.py
 
 # Set environment variables for the runtime container
 ENV PATH=/root/.local/bin:$PATH \
@@ -36,8 +36,11 @@ WORKDIR /app
 # Copy the installed dependencies from the builder stage to the runtime environment
 COPY --from=builder /install /usr/local
 
+# Copy healthcheck script
+COPY ./healthcheck.py /app/
+
 # Copy the application code into the container
-COPY ./app /app/app  
+COPY ./app /app/app
 
 # Application Execution
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

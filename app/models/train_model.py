@@ -1,6 +1,6 @@
 import numpy as np
-from sklearn.linear_model import LinearRegression
 import joblib
+from sklearn.linear_model import LinearRegression
 from typing import Any
 
 # Input data (features) and corresponding outputs (targets)
@@ -32,7 +32,7 @@ model: LinearRegression = LinearRegression()
 model.fit(X, Y)
 
 # Save the trained model to a file
-joblib.dump(model, 'app/regression_model.pkl')
+joblib.dump(model, 'app/models/regression_model.pkl')
 
 # Test the model by making predictions with the same input
 predictions: np.ndarray = model.predict(X)
@@ -42,7 +42,7 @@ print("Predictions:\n", predictions)
 print("Actual values:\n", Y)
 
 # Optional: If you want to load and test the saved model
-loaded_model: LinearRegression = joblib.load('app/regression_model.pkl')
+loaded_model: LinearRegression = joblib.load('app/models/regression_model.pkl')
 
 # Test the model with a new input
 new_input: np.ndarray = np.array([[2.0, 3.0]])  # Example test input

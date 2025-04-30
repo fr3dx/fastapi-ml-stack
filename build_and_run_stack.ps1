@@ -8,7 +8,7 @@ $fullImageName = "$imageName"+":latest"
 
 # Run model training script
 Write-Host "Running model training script..."
-python .\app\model.py
+python .\app\models\train_model.py
 
 # Check if model training was successful
 if ($LASTEXITCODE -ne 0) {

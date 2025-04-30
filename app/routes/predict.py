@@ -1,8 +1,8 @@
+import numpy as np
 from fastapi import APIRouter, Request, Form
 from fastapi.templating import Jinja2Templates
-from app.load_model import load_model, predict
-from app.config import settings
-import numpy as np
+from app.models.load_model import load_model, predict
+from app.config.settings import settings
 from typing import Dict, Union
 
 router = APIRouter()

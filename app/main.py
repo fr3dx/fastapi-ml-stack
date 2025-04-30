@@ -1,9 +1,9 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
-from app.config import settings
 from fastapi.middleware.cors import CORSMiddleware
-from app.routes import routes
 from typing import List
+from app.routes import routes
+from app.config.settings import settings
 
 # Initialize FastAPI application
 app: FastAPI = FastAPI()

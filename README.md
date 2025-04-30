@@ -54,6 +54,41 @@ y₃ = -x₁ + 4 * x₂
 | Build + run full stack             | `build_and_run_stack.ps1`        |
 | Clean up containers/images         | `remove_all_container_images.ps1`|
 
+
+## Project structure
+```
+project_root/
+├── Dockerfile
+├── requirements.txt
+├── .env
+│
+├── app/
+│   ├── __init__.py
+│   ├── main.py                  # FastAPI app init
+│   ├── settings.py              # Pydantic basedapp config
+│   │
+│   ├── models/                  # ML models, train and predict
+│   │   ├── __init__.py
+│   │   ├── train_model.py       # train model
+│   │   ├── load_model.py        # load_model() and predict() here
+│   │   └── regression_model.pkl # model
+│   │
+│   ├── routes/                  # routes
+│   │   ├── __init__.py
+│   │   ├── home.py              # Homepage route
+│   │   ├── predict.py           # Prediction route
+│   │   └── health.py            # Healthcheck route
+│   │
+│   ├── templates/               # Jinja2 HTML templates
+│   │   ├── index.html
+│   │   ├── result.html
+│   │   └── error.html
+│   │
+│   ├── static/                  # Static files (CSS, JS, images)
+│
+└── healthcheck.py              # Docker healthcheck script
+```
+
 ## API Usage
 
 ### cURL Examples

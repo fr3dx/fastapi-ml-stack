@@ -11,7 +11,7 @@ class Settings(BaseSettings):
     allowed_origins: str = "http://localhost,http://127.0.0.1"
     
     # Path to the pre-trained model file used by the application
-    model_path: str = "/app/app/regression_model.pkl"
+    model_path: str = "/app/app/models/regression_model.pkl"
 
     class Config:
         """
