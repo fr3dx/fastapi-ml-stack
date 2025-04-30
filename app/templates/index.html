@@ -8,6 +8,7 @@
     <script src="https://unpkg.com/htmx.org@1.7.0"></script>
     <!-- HTMX script -->
   </head>
+
   <body>
     <div class="container">
       <h1>Linear Regression Prediction</h1>
@@ -37,26 +38,31 @@
             value="{{ inputs.x2 if inputs else '' }}"
             required/>
         </div>
-
         <button type="submit" class="btn">Predict</button>
       </form>
 
       <!-- Display results -->
       <div id="result">
         {% if prediction %}
-        <div class="result">
-          <h3>Prediction Results</h3>
-          <div class="prediction">
-            <p><strong>y₁:</strong> {{ prediction.y1 }}</p>
-            <p><strong>y₂:</strong> {{ prediction.y2 }}</p>
-            <p><strong>y₃:</strong> {{ prediction.y3 }}</p>
+          <div class="result success">
+            <h3>Input data</h3>
+            <div class="inputs">
+              <p><strong>Input 1:</strong> {{ inputs.x1 }}</p>
+              <p><strong>Input 2:</strong> {{ inputs.x2 }}</p>
+            </div>
+            <hr style="margin: 20px 0;" />
+            <h3>Prediction Results</h3>
+            <div class="prediction">
+              <p><strong>y₁:</strong> {{ prediction.y1 }}</p>
+              <p><strong>y₂:</strong> {{ prediction.y2 }}</p>
+              <p><strong>y₃:</strong> {{ prediction.y3 }}</p>
+            </div>
           </div>
-        </div>
         {% elif error %}
-        <div class="result">
-          <h3>Error</h3>
-          <p>{{ error }}</p>
-        </div>
+          <div class="result error">
+            <h3>Error</h3>
+            <p>{{ error }}</p>
+          </div>
         {% endif %}
       </div>
 

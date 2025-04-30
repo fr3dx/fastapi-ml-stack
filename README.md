@@ -58,14 +58,11 @@ y₃ = -x₁ + 4 * x₂
 ## Project structure
 ```
 fastapi-ml-stack/
-├── Dockerfile
-├── build_and_run_stack.ps1         # Build and run stack
-├── build_stack.ps1                 # Build stack
-├── remove_all_container_images.ps1 # Remove containerimages
 │
 ├── app/
-│   ├── __init__.py
-│   ├── main.py                     # FastAPI app init
+│   │
+│   ├── config/                     # Config files
+│   │   └── settings.py             # Pydantic
 │   │
 │   ├── models/                     # ML models, train and predict
 │   │   ├── __init__.py
@@ -79,19 +76,23 @@ fastapi-ml-stack/
 │   │   ├── predict.py
 │   │   └── health.py
 │   │
+│   ├── static/                     # Static files (CSS)
+│   │   └── style.css
+│   │
 │   ├── templates/                  # Jinja2 HTML templates
 │   │   ├── index.html
 │   │   ├── result.html
 │   │   └── error.html
 │   │
-│   ├── config/                     # Config files
-│   │   ├── settings.py             # Pydantic
-│   │
-│   ├── static/                     # Static files (CSS)
-│   │
+│   ├── __init__.py
+│   ├── main.py                     # FastAPI app init
 │   ├── requirements.txt 
-│   ├── .env
+│   └── .env
 │
+├── build_and_run_stack.ps1
+├── build_stack.ps1
+├── Dockerfile
+├── remove_all_container_images.ps1
 └── healthcheck.py                  # Docker healthcheck script
 ```
 
