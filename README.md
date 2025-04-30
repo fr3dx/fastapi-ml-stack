@@ -57,36 +57,42 @@ y₃ = -x₁ + 4 * x₂
 
 ## Project structure
 ```
-project_root/
+fastapi-ml-stack/
 ├── Dockerfile
-├── requirements.txt
-├── .env
+├── build_and_run_stack.ps1         # Build and run stack
+├── build_stack.ps1                 # Build stack
+├── remove_all_container_images.ps1 # Remove containerimages
 │
 ├── app/
 │   ├── __init__.py
-│   ├── main.py                  # FastAPI app init
-│   ├── settings.py              # Pydantic basedapp config
+│   ├── main.py                     # FastAPI app init
 │   │
-│   ├── models/                  # ML models, train and predict
+│   ├── models/                     # ML models, train and predict
 │   │   ├── __init__.py
-│   │   ├── train_model.py       # train model
-│   │   ├── load_model.py        # load_model() and predict() here
-│   │   └── regression_model.pkl # model
+│   │   ├── train_model.py          
+│   │   ├── load_model.py           
+│   │   └── regression_model.pkl    # model created after training
 │   │
-│   ├── routes/                  # routes
+│   ├── routes/                     # Routes
 │   │   ├── __init__.py
-│   │   ├── home.py              # Homepage route
-│   │   ├── predict.py           # Prediction route
-│   │   └── health.py            # Healthcheck route
+│   │   ├── home.py
+│   │   ├── predict.py
+│   │   └── health.py
 │   │
-│   ├── templates/               # Jinja2 HTML templates
+│   ├── templates/                  # Jinja2 HTML templates
 │   │   ├── index.html
 │   │   ├── result.html
 │   │   └── error.html
 │   │
-│   ├── static/                  # Static files (CSS, JS, images)
+│   ├── config/                     # Config files
+│   │   ├── settings.py             # Pydantic
+│   │
+│   ├── static/                     # Static files (CSS)
+│   │
+│   ├── requirements.txt 
+│   ├── .env
 │
-└── healthcheck.py              # Docker healthcheck script
+└── healthcheck.py                  # Docker healthcheck script
 ```
 
 ## API Usage
