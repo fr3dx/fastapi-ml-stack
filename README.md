@@ -101,9 +101,9 @@ fastapi-ml-stack/
 ├── build_and_run_stack.ps1
 ├── build_stack.ps1
 ├── Dockerfile
-├── healthcheck.py
+├── healthcheck.py                  # Docker healthcheck script
 ├── requirements.txt 
-└── remove_all_container_images.ps1 # Docker healthcheck script
+└── remove_all_container_images.ps1
 
 ```
 ## API Usage
