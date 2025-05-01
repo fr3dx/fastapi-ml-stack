@@ -1,4 +1,4 @@
-# FastAPI + HTMX + Linear Regression
+# FastAPI + HTMX + Multi-output Linear Regression
 
 This project is a **FastAPI**-based web application powered by a **multi-output linear regression model**, trained using `scikit-learn`. It includes a simple **HTMX** frontend for user interaction and is fully containerized using **Podman** or **Docker**.
 
@@ -38,13 +38,23 @@ y₃ = -x₁ + 4 * x₂
 - `Predictions`: Structures output
 - **Configuration**: `.env` support via `pydantic.BaseSettings`
 
-## Setup
+## Prerequisites
 
-### Prerequisites
+- Docker Desktop (recommended for Windows) → [Download](https://www.docker.com/products/docker-desktop/)
+- Podman Desktop → [Download](https://podman.io/getting-started/installation)
+- PowerShell (built-in on Windows)
 
-- Python 3.12
-- Podman/Docker
-- PowerShell (for scripts)
+## Run Locally on Windows
+
+Launch from PowerShell:
+```
+build_and_run_stack.ps1
+```
+
+Then open:
+```
+http://localhost:8000
+```
 
 ### PowerShell Scripts
 
@@ -95,9 +105,7 @@ fastapi-ml-stack/
 ├── requirements.txt 
 └── remove_all_container_images.ps1 # Docker healthcheck script
 
-remove_all_container_images.ps1
 ```
-
 ## API Usage
 
 ### Predict (cURL)
@@ -129,6 +137,10 @@ curl -X GET http://127.0.0.1:8000/health
 
 ## The frontend
 ![Frontend](/images/fe.png)
+
+## License
+
+This project is licensed under the [MIT License](https://mit-license.org/).
 
 ---
 
