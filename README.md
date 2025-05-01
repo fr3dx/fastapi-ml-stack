@@ -86,14 +86,16 @@ fastapi-ml-stack/
 │   │
 │   ├── __init__.py
 │   ├── main.py                     # FastAPI app init
-│   ├── requirements.txt 
 │   └── .env
 │
 ├── build_and_run_stack.ps1
 ├── build_stack.ps1
 ├── Dockerfile
-├── remove_all_container_images.ps1
-└── healthcheck.py                  # Docker healthcheck script
+├── healthcheck.py
+├── requirements.txt 
+└── remove_all_container_images.ps1 # Docker healthcheck script
+
+remove_all_container_images.ps1
 ```
 
 ## API Usage
