@@ -6,19 +6,7 @@ $containerName = "fastapi-regression"
 $fullContainerName = "$containerName"+":latest"
 $fullImageName = "$imageName"+":latest"
 
-# Run model training script
-Write-Host "Running model training script..."
-python .\app\models\train_model.py
-
-# Check if model training was successful
-if ($LASTEXITCODE -ne 0) {
-    Write-Host "Model training failed. Exiting..."
-    exit 1
-}
-
-Write-Host "Model training completed successfully."
-
-# Build the Podman image after model training
+# Build the Podman images
 Write-Host "Building Podman image..."
 podman build --format docker -t $fullContainerName .
 

@@ -23,9 +23,9 @@ y₃ = -x₁ + 4 * x₂
 ```
 
 - **API Endpoints**:
-- `/predict` (POST): Accepts URL-encoded form data `application/x-www-form-urlencoded` → returns predicted `y1`, `y2`, `y3`
-- `/` (GET): Serves HTMX frontend
-- `/health` (GET): Healthcheck
+- `POST /predict`: Accepts form data and returns `y₁`, `y₂`, `y₃`
+- `GET /`: Serves HTMX frontend
+- `GET /health`: Healthcheck
 
 - **Frontend**: HTMX-powered form with real-time results
 - **Containerized**: Complete stack in containers for reproducibility
@@ -98,7 +98,7 @@ fastapi-ml-stack/
 
 ## API Usage
 
-### cURL Examples
+### Predict (cURL)
 
 ```
 curl -X POST -d "x1=1&x2=2" http://127.0.0.1:8000/predict
@@ -127,4 +127,12 @@ curl -X GET http://127.0.0.1:8000/health
 
 ## The frontend
 ![Frontend](/images/fe.png)
+
+---
+
+<p align="center">
+  Built with ❤️ and rational thought.<br>
+  <em>Amore et ratione.</em>
+</p>
+
 
