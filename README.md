@@ -40,15 +40,14 @@ y₃ = -x₁ + 4 * x₂
 
 ## Prerequisites
 
-- Docker Desktop (recommended for Windows) → [Download](https://www.docker.com/products/docker-desktop/)
 - Podman Desktop → [Download](https://podman.io/getting-started/installation)
 - PowerShell (built-in on Windows)
 
 ## Run Locally on Windows
 
-Launch from PowerShell:
+Launch from PowerShell (Working with Podman):
 ```
-build_and_run_stack.ps1
+./build_and_run_stack.ps1
 ```
 
 Then open:
